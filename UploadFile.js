@@ -18,13 +18,17 @@ fileUpload.post('/upload',upload.single('file'),async(req,res)=>
       const localPath = req.file.path;
     
       const cloudinaryResp = await uploadOnCloudinary(localPath);
+
+      //To Check respons
+      console.log("cloudinaryResp: ",cloudinaryResp);
+      
     
-      fs.unlinkSync(localPath);
+      //fs.unlinkSync(localPath);
     
       return res.status(200).json({
         code:200,
         message:"File uploaded to cloudinary successfully",
-        url: cloudinaryResp.url
+        url: cloudinaryResp
       })
     } catch (error) {
       return res.status(500).json({message:"Fail to upload file",error:error.message})
